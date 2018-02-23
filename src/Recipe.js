@@ -10,7 +10,7 @@ class Recipe extends Component {
     return (
       <div className="Recipe" align="left">
         <Header as='h1'>Tripel my luck</Header>
-        <p>Feels like being struck by an Irish lepcrechaun</p>
+        <p>Feels like being struck by an Irish leprechaun</p>
         <Fermentables />
         <Hops />
         <Yeasts />
