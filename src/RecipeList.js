@@ -36,7 +36,8 @@ class RecipeList extends Component {
     return (
       <div className="RecipeList">
         {this.renderRecipes()}
-        <Icon name='add circle' size='huge' onClick={this.addRecipe }/>
+        <Icon name='add circle' size='huge' onClick={this.addRecipe } /> <br />
+        Add new recipe
       </div>
     );
   }
