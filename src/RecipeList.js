@@ -5,6 +5,9 @@ import './RecipeList.css';
 class RecipeList extends Component {
 
 
+  addRecipe = () => {
+    console.log("Button pressed");
+  }
 
   constructor(props) {
     super(props);
@@ -28,31 +31,28 @@ class RecipeList extends Component {
       }
     ];
 
-    this.state = {recipies:testdata};
-    this.addRecipe = this.addRecipe.bind(this);
+    this.state = { recipies: testdata };
   }
 
   render() {
     return (
       <div className="RecipeList">
         {this.renderRecipes()}
-        <Icon name='add circle' size='huge' onClick={this.addRecipe } /> <br />
-        Add new recipe
+        <a href='./recipe'>
+          <Icon name='add circle' size='huge' /> <br />
+          Add new recipe
+        </a>
       </div>
     );
   }
 
   renderRecipes() {
     return this.state.recipies.map(beer => (
-      <Card raised={true} centered={true} key={beer.key}>
+      <Card raised={true} centered={true} key={beer.key} href='./recipe'>
         <Card.Header>{beer.name}</Card.Header>
         <Card.Content>{beer.desc}</Card.Content>
       </Card>
     ));
-  }
-
-  addRecipe() {
-    console.log("Button pressed")
   }
 }
 
