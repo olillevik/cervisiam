@@ -43,7 +43,7 @@ class Fermentables extends Component {
   }
 
   renderBill() {
-    return <Table celled color={'green'}>
+    return <Table selectable color={'green'}>
       <Table.Header>
         {this.renderHeaderRows()}
       </Table.Header>
@@ -68,9 +68,9 @@ class Fermentables extends Component {
     return this.state.bill.fermentables.map(fermentable => (
       <Table.Row>
         <Table.Cell>{fermentable.name}</Table.Cell>
-        <Table.Cell selectable textAlign='center'>{fermentable.percentage} %</Table.Cell>
-        <Table.Cell selectable textAlign='center'>{fermentable.ppg}</Table.Cell>
-        <Table.Cell selectable textAlign='center'>{fermentable.colorLovibond} L</Table.Cell>
+        <Table.Cell textAlign='center'>{fermentable.percentage} %</Table.Cell>
+        <Table.Cell textAlign='center'>{fermentable.ppg}</Table.Cell>
+        <Table.Cell textAlign='center'>{fermentable.colorLovibond} L</Table.Cell>
       </Table.Row>
     ));
   }

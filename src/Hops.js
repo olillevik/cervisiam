@@ -37,7 +37,7 @@ class Hops extends Component {
   }
 
   renderHopBill() {
-    return <Table celled color={'teal'} selectable>
+    return <Table color={'teal'} selectable>
       <Table.Header>
         {this.renderHeaderRows()}
       </Table.Header>
@@ -60,7 +60,7 @@ class Hops extends Component {
 
   renderHops() {
     return this.state.hopBill.hops.map(hop => (
-      <Table.Row>
+      <Table.Row onClick={this.doStuff(hop)}>
         <Table.Cell>{hop.name}</Table.Cell>
         <Table.Cell>{hop.time} min</Table.Cell>
         <Table.Cell>{hop.aa} %</Table.Cell>
@@ -68,6 +68,10 @@ class Hops extends Component {
       </Table.Row>
     ));
   }
+
+  doStuff = (key) => {
+
+  };
 }
 
 export default Hops;
