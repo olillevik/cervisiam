@@ -8,21 +8,23 @@ class Fermentables extends Component {
     super(props);
 
     const testdata = {
-      key: '1',
       fermentables: [
         {
+      key: '1',
           name: 'Pilsner',
           percentage: 90,
           colorLovibond: 1,
           ppg: 37
         },
         {
+          key: '2',
           name: 'Munich',
           percentage: 2,
           colorLovibond: 6,
           ppg: 36
         },
         {
+          key: '3',
           name: 'Dextrose',
           percentage: 8,
           colorLovibond: 0,
@@ -66,7 +68,7 @@ class Fermentables extends Component {
 
   renderFermentables() {
     return this.state.bill.fermentables.map(fermentable => (
-      <Table.Row>
+      <Table.Row key={fermentable.key}>
         <Table.Cell>{fermentable.name}</Table.Cell>
         <Table.Cell textAlign='center'>{fermentable.percentage} %</Table.Cell>
         <Table.Cell textAlign='center'>{fermentable.ppg}</Table.Cell>
