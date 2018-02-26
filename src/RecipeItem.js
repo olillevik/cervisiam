@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import {Button, Grid, Input, Label, Segment} from 'semantic-ui-react'
 
-class Yeast extends Component {
+class RecipeItem extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             canEdit: false,
-            name: props.data.name,
-            attenuation: props.data.attenuation
+            item: this.props.data
         };
     }
 
@@ -48,12 +47,9 @@ class Yeast extends Component {
                 <Label attached='top right' onClick={this.removeMe}>Remove item</Label>
                 <Grid columns={2} divided>
                     <Grid.Row stretched>
-                        <Grid.Column>
-                            <Input defaultValue={this.props.data.name} onChange={this.updateName}/>
-                        </Grid.Column>
-                        <Grid.Column textAlign='center'>
-                            <Input defaultValue={this.props.data.attenuation} onChange={this.updateAttenuation}/>
-                        </Grid.Column>
+                        {Object.keys(this.props.data).filter(key => (key != 'key')).map(key => (
+                            <Grid.Column><Input name={key} defaultValue={this.props.data[key]}onChange={this.updateField}/></Grid.Column>
+                        ))}
                     </Grid.Row>
                     <Grid.Row stretched>
                         <Grid.Column>
@@ -73,12 +69,16 @@ class Yeast extends Component {
 
     editable = () => this.setState({canEdit: true});
     notEditable = () => this.setState({canEdit: false});
-    updateName = (event) => this.setState({name: event.target.value});
-    updateAttenuation = (event) => this.setState({attenuation: event.target.value});
+
+    updateField = (event) => {
+        var tempItem = this.state.item;
+        tempItem[event.target.name] = event.target.value;
+        this.setState(tempItem);
+    }
 
     removeMe = () => {
         this.props.removeItem({
-            yeast: {
+            data: {
                 key: this.props.data.key,
             }
         });
@@ -86,15 +86,9 @@ class Yeast extends Component {
 
     updateMe = () => {
         console.log(this.props);
-        this.props.updateItem({
-            yeast: {
-                key: this.props.data.key,
-                name: this.state.name,
-                attenuation: this.state.attenuation
-            }
-        });
+        this.props.updateItem(this.state.item);
         this.notEditable();
     }
 }
 
-export default Yeast;
+export default RecipeItem;

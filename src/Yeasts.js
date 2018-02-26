@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid, Header, Label, Segment} from 'semantic-ui-react';
 import './Yeasts.css';
-import Yeast from './Yeast';
+import RecipeItem from './RecipeItem';
 
 class Yeasts extends Component {
 
@@ -53,8 +53,8 @@ class Yeasts extends Component {
 
     renderRows = () => {
         return this.state.data.map(item => (
-            <Yeast data={item} updateItem={this.updateItem} removeItem={this.removeItem}
-                   key={item.key}/>
+            <RecipeItem data={item} updateItem={this.updateItem} removeItem={this.removeItem}
+                        key={item.key}/>
         ));
     }
 
@@ -74,11 +74,14 @@ class Yeasts extends Component {
     }
 
     removeItem = (callbackFromChild) => {
-        this.setState({data: this.state.data.filter(item => item.key != callbackFromChild.yeast.key)})
+        console.log(this.state.data);
+        console.log(callbackFromChild);
+        this.setState({data: this.state.data.filter(item => item.key != callbackFromChild.data.key)})
     }
 
     updateItem = (callbackFromChild) => {
-        var items = this.state.data.map(item => this.replaceIfMatch(item, callbackFromChild.yeast));
+        console.log(callbackFromChild);
+        var items = this.state.data.map(item => this.replaceIfMatch(item, callbackFromChild));
         this.setState({data: items});
 
     }
