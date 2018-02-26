@@ -9,53 +9,62 @@ class Yeasts extends Component {
         super(props);
 
         const testdata = {
-            yeasts: [
+            headings: ['Name,', 'Attenuation'],
+            data: [
                 {
                     key: '1',
-                    commonName: 'Safale S01',
+                    name: 'Safale S01',
                     attenuation: 85
                 },
                 {
                     key: '2',
-                    commonName: 'WLP001 Califonia Ale',
+                    name: 'WLP001 Califonia Ale',
                     attenuation: 80
                 }
             ]
         };
-        this.state = ({yeasts: testdata.yeasts});
+        this.state = ({data: testdata.data, headings: testdata.headings});
     }
 
     render() {
         return (
             <div className="Yeasts">
                 <Segment.Group>
-
                     <Segment raised>
                         <Header as='h2'>Yeasts</Header>
                         <Label attached='top right' onClick={this.addItem}>Add Yeast</Label>
                     </Segment>
                     <Segment>
-                        <Grid columns={2} divided><Grid.Row stretched>
-                            <Grid.Column><Header as='h3'>Name</Header></Grid.Column>
-                            <Grid.Column><Header as='h3'>Attenuation</Header></Grid.Column>
-                        </Grid.Row></Grid>
-
-                        {this.state.yeasts.map(yeast => (
-                            <Yeast data={yeast} updateItem={this.updateItem} removeItem={this.removeItem} key={yeast.key}/>
-                        ))}
+                        {this.renderHeadings()}
+                        {this.renderRows()}
                     </Segment>
                 </Segment.Group>
             </div>
         );
     }
 
+    renderHeadings = () => {
+        return <Grid columns={2} divided><Grid.Row stretched>
+            {this.state.headings.map(heading => (
+                <Grid.Column key={heading}><Header as='h3'>{heading}</Header></Grid.Column>
+            ))}
+        </Grid.Row></Grid>
+    }
+
+    renderRows = () => {
+        return this.state.data.map(item => (
+            <Yeast data={item} updateItem={this.updateItem} removeItem={this.removeItem}
+                   key={item.key}/>
+        ));
+    }
+
     addItem = () => {
-        var newYeast = {
+        var newItem = {
             key: this.uuid(),
-            commonName: 'Unknown',
+            name: 'Unknown',
             attenuation: '80'
         }
-        this.setState({yeasts: [...this.state.yeasts, newYeast]});
+        this.setState({data: [...this.state.data, newItem]});
     }
 
     uuid() {
@@ -65,14 +74,12 @@ class Yeasts extends Component {
     }
 
     removeItem = (callbackFromChild) => {
-
-        this.setState({yeasts: this.state.yeasts.filter(yeast => yeast.key != callbackFromChild.yeast.key)})
+        this.setState({data: this.state.data.filter(item => item.key != callbackFromChild.yeast.key)})
     }
 
     updateItem = (callbackFromChild) => {
-
-        var newYeastBill = this.state.yeasts.map(yeast => this.replaceIfMatch(yeast, callbackFromChild.yeast));
-        this.setState({yeasts: newYeastBill});
+        var items = this.state.data.map(item => this.replaceIfMatch(item, callbackFromChild.yeast));
+        this.setState({data: items});
 
     }
 

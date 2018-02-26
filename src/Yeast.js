@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Grid, Input, Segment, Label} from 'semantic-ui-react'
+import {Button, Grid, Input, Label, Segment} from 'semantic-ui-react'
 
 class Yeast extends Component {
 
@@ -7,7 +7,7 @@ class Yeast extends Component {
         super(props);
         this.state = {
             canEdit: false,
-            commonName: props.data.commonName,
+            name: props.data.name,
             attenuation: props.data.attenuation
         };
     }
@@ -34,8 +34,9 @@ class Yeast extends Component {
         return (
             <Grid columns={2} divided>
                 <Grid.Row stretched onClick={this.editable}>
-                    <Grid.Column>{this.props.data.commonName}</Grid.Column>
-                    <Grid.Column>{this.props.data.attenuation}</Grid.Column>
+                    {Object.keys(this.props.data).filter(key => (key != 'key')).map(key => (
+                        <Grid.Column>{this.props.data[key]}</Grid.Column>
+                    ))}
                 </Grid.Row>
             </Grid>
         );
@@ -48,7 +49,7 @@ class Yeast extends Component {
                 <Grid columns={2} divided>
                     <Grid.Row stretched>
                         <Grid.Column>
-                            <Input defaultValue={this.props.data.commonName} onChange={this.updateName}/>
+                            <Input defaultValue={this.props.data.name} onChange={this.updateName}/>
                         </Grid.Column>
                         <Grid.Column textAlign='center'>
                             <Input defaultValue={this.props.data.attenuation} onChange={this.updateAttenuation}/>
@@ -72,7 +73,7 @@ class Yeast extends Component {
 
     editable = () => this.setState({canEdit: true});
     notEditable = () => this.setState({canEdit: false});
-    updateName = (event) => this.setState({commonName: event.target.value});
+    updateName = (event) => this.setState({name: event.target.value});
     updateAttenuation = (event) => this.setState({attenuation: event.target.value});
 
     removeMe = () => {
@@ -88,7 +89,7 @@ class Yeast extends Component {
         this.props.updateItem({
             yeast: {
                 key: this.props.data.key,
-                commonName: this.state.commonName,
+                name: this.state.name,
                 attenuation: this.state.attenuation
             }
         });
